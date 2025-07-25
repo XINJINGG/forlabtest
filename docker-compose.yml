@@ -15,21 +15,54 @@ services:
   #     - "4444:4444"
 
   # for gitea
-  gitea:
-    image: gitea/gitea:latest
-    container_name: gitea-labtest
-    restart: always
-    ports:
-      - "3001:3000"  # Gitea UI accessible at localhost:3001
-      - "222:22"
-    volumes:
-      - gitea-data:/data
-    environment:
-      - GITEA__server__ROOT_URL=http://localhost:3001/
-      - GITEA__security__INSTALL_LOCK=true
-      - GITEA__security__SECRET_KEY=your-secret-key
-      - GITEA__admin__USER=ChuaXinJing
-      - GITEA__admin__EMAIL=2302123@sit.singaporetech.edu.sg
+  # gitea:
+  #   image: gitea/gitea:latest
+  #   container_name: gitea-labtest
+  #   restart: always
+  #   ports:
+  #     - "3001:3000"  # Gitea UI accessible at localhost:3001
+  #     - "222:22"
+  #   volumes:
+  #     - gitea-data:/data
+  #   environment:
+  #     - GITEA__server__ROOT_URL=http://localhost:3001/
+  #     - GITEA__security__INSTALL_LOCK=true
+  #     - GITEA__security__SECRET_KEY=your-secret-key
+  #     - GITEA__admin__USER=ChuaXinJing
+  #     - GITEA__admin__EMAIL=2302123@sit.singaporetech.edu.sg
+
+  # # drone runner
+  # drone-server:
+  #   image: drone/drone:latest
+  #   container_name: drone-server
+  #   ports:
+  #     - 8080:80               # Drone UI on port 8080
+  #   volumes:
+  #     - drone-data:/data
+  #   environment:
+  #     - DRONE_GITEA_SERVER=http://gitea:3000
+  #     - DRONE_RPC_SECRET=4f8d3a9c2e5b7f1d6a0c9e2f3b7d4a1e
+  #     - DRONE_SERVER_HOST=http://localhost:8080
+  #     - DRONE_SERVER_PROTO=http
+  #     - DRONE_USER_CREATE=username:ChuaXinJing,admin:true
+  #     - DRONE_GITEA_CLIENT_ID=ca55c3da-5182-4d59-9fb2-14b8a545a40c
+  #     - DRONE_GITEA_CLIENT_SECRET=gto_34jtnrbjl5azx2ua6tvrqlgcdmjnxk55576mnca7l7c5j6ozlzna
+  #   restart: always
+
+  # drone-agent:
+  #   image: drone/agent:latest
+  #   container_name: drone-agent
+  #   depends_on:
+  #     - drone-server
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - DRONE_RPC_PROTO=http
+  #     - DRONE_RPC_HOST=drone-server
+  #     - DRONE_RPC_SECRET=4f8d3a9c2e5b7f1d6a0c9e2f3b7d4a1e
+  #     - DRONE_RUNNER_CAPACITY=2
+  #     - DRONE_RUNNER_NAME=drone-agent-1
+  #   restart: always
 
   # gitea runner creation
   # gitea-runner:
@@ -59,6 +92,7 @@ services:
 
 volumes:
   gitea-data:
+  drone-data:
 #   sonarqube_data:
 #   sonarqube_logs:
 #   sonarqube_extensions:
