@@ -79,20 +79,22 @@ services:
   #   volumes:
   #     - ./runner-data:/data  
 
-#   sonarqube:
-#     image: sonarqube:community
-#     ports:
-#       - "9000:9000"
-#     environment:
-#       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-#     volumes:
-#       - sonarqube_data:/opt/sonarqube/data
-#       - sonarqube_logs:/opt/sonarqube/logs
-#       - sonarqube_extensions:/opt/sonarqube/extensions
+  sonarqube:
+    image: sonarqube:community
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    # pw: 2302123@Sit.singaporetech.edu.sg - need capital
+    # token: sqp_b6b8d2cf7e9f2c7e62153b995727527f79e8990b
 
 volumes:
   gitea-data:
   drone-data:
-#   sonarqube_data:
-#   sonarqube_logs:
-#   sonarqube_extensions:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:

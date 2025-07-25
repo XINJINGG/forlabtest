@@ -25,6 +25,7 @@ describe('POST /search', function() {
   it('accepts safe input', function(done) {
     request(app)
       .post('/search')
+      .type('form') 
       .send({ q: 'hello' })
       .expect(200)
       .expect(/hello/) // sanitized term rendered
