@@ -1,4 +1,4 @@
-name: OWASP Dependency Check
+name: Checks
 
 on: [push, pull_request]
 
