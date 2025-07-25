@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const app = require('../app'); // Your Express app export
+const app = require('../index'); // Your Express app export
 
 describe('GET /', function() {
   it('responds with 200 and renders index', function(done) {
