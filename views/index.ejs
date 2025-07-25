@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Search Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    form {
+      display: flex;
+      gap: 0.5rem;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search</h1>
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+  <form action="/search" method="GET">
+    <input type="text" name="q" placeholder="Enter search term" required />
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

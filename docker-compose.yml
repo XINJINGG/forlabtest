@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "80:3000"
+    volumes:
+      - .:/app
+    command: npm run dev
+
+  # selenium:
+  #   image: selenium/standalone-chrome
+  #   ports:
+  #     - "4444:4444"
+
+  # for gitea
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea-labtest
+    restart: always
+    ports:
+      - "3001:3000"  # Gitea UI accessible at localhost:3001
+      - "222:22"
+    volumes:
+      - gitea-data:/data
+    environment:
+      - GITEA__server__ROOT_URL=http://localhost:3001/
+      - GITEA__security__INSTALL_LOCK=true
+      - GITEA__security__SECRET_KEY=your-secret-key
+      - GITEA__admin__USER=ChuaXinJing
+      - GITEA__admin__EMAIL=2302123@sit.singaporetech.edu.sg
+
+  # gitea runner creation
+  # gitea-runner:
+  #   image: gitea/act_runner:latest
+  #   # can change name if got another container with same name already exist
+  #   container_name: gitea-runner-labtest
+  #   depends_on:
+  #     - gitea
+  #   restart: always
+  #   environment:
+  #     - GITEA_RUNNER_REGISTRATION_TOKEN=
+  #     - GITEA_RUNNER_LABELS=self-hosted,ubuntu-latest
+  #     - GITEA_INSTANCE_URL=http://gitea:3000
+  #   volumes:
+  #     - ./runner-data:/data  
+
+#   sonarqube:
+#     image: sonarqube:community
+#     ports:
+#       - "9000:9000"
+#     environment:
+#       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+#     volumes:
+#       - sonarqube_data:/opt/sonarqube/data
+#       - sonarqube_logs:/opt/sonarqube/logs
+#       - sonarqube_extensions:/opt/sonarqube/extensions
+
+volumes:
+  gitea-data:
+#   sonarqube_data:
+#   sonarqube_logs:
+#   sonarqube_extensions:
