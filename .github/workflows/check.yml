@@ -18,9 +18,11 @@ jobs:
         run: npm install
         working-directory: "."
 
+      # INTEGRATION TESTING
       - name: Run integration tests
         run: npm test
 
+      # OWASP DEPENDENCY
       - name: Run OWASP Dependency Check
         uses: dependency-check/Dependency-Check_Action@main
         with:
@@ -34,3 +36,29 @@ jobs:
         with:
           name: Dependency-Check-Report
           path: dependency-check-report
+
+      # ESLINT (with sarif, otherwise code scanner wont have)
+      # Install ESLint SARIF Formatter
+      - name: Install ESLint SARIF Formatter
+        run: npm install @microsoft/eslint-formatter-sarif --save-dev
+
+      # Run ESLint security scan with SARIF output
+      - name: Run ESLint security scan with SARIF output
+        run: npx eslint . --format @microsoft/eslint-formatter-sarif --output-file reports/eslint-results.sarif || true
+
+      # Run ESLint with HTML formatter to generate HTML report if you want it
+      - name: Run ESLint security scan with HTML output
+        run: npx eslint . -f html -o eslint-report.html || true
+
+      # Upload ESLint HTML report
+      - name: Upload ESLint HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-html-report
+          path: ./eslint-report.html
+
+      # Upload SARIF report for GitHub Code Scanning
+      - name: Upload ESLint SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ./reports/eslint-results.sarif
