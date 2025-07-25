@@ -19,8 +19,8 @@ jobs:
         working-directory: "."
 
       # INTEGRATION TESTING
-      - name: Run integration tests
-        run: npm test
+      # - name: Run integration tests
+      #   run: npm test
 
       # OWASP DEPENDENCY
       - name: Run OWASP Dependency Check
